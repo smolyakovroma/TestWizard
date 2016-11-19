@@ -1,0 +1,106 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <!--<form method="post" name="comment_form" id="comment_form" action="/tests/update" role="form">-->
+    <!--<div class="form-group">-->
+    <!--<label for="message">Post</label>-->
+    <!--<textarea rows="5" class="form-control" id="message" name="message" th:text="${test.name}"/>-->
+    <!--</div>-->
+    <!--<input type="hidden" id="test_id" rows="5" class="form-control" name="test_id" th:value="${test.id}"/>-->
+    <!--<button type="submit" id="submit" class="btn btn-primary">Submit</button>-->
+    <!--</form>-->
+    <p th:text="${test.name}">Name</p>
+
+    <!--<div class="container">-->
+    <!--<div class="row">-->
+    <!--<a href="#" class="btn btn-default">default</a>-->
+    <!--<a href="#" class="btn btn-primary">primary</a>-->
+    <div th:if="${!test.singlepage}">
+        <a href="#" class="btn btn-success pull-right">Закончить</a>
+    </div>
+    <div th:if="${test.singlepage}">
+        <a href="#" class="btn btn-danger">Предыдуший вопрос</a>
+        <a href="#" class="btn btn-primary">Следующий вопрос</a>
+        <a href="#" class="btn btn-success pull-right">Закончить</a>
+    </div>
+    <!--<a href="#" class="btn btn-warning">warning</a>-->
+    <!--<a href="#" class="btn btn-info">info</a>-->
+    <!--<a href="#" class="btn btn-danger">danger</a>-->
+    <!--<a href="#" class="btn btn-link">link</a>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <table class="table table-striped" id="posts_list">
+        <thead>
+        <tr>
+            <th>Questions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!--Один вопрос на страницу, переходим кнопками-->
+        <tr  th:if="${test.singlepage}">
+            <!--<p th:text = "${test.questions.get(1).question}"/>-->
+            <!--<p data-th-each="answer : ${test.questions.get(1).answers}">-->
+                <!--<p th:text = "${answer.answer}">Answer</p>-->
+            <!--</p>-->
+            <table class="table table-hover" id="question">
+                <thead>
+                <tr>
+                    <th style="width: auto"></th>
+                    <th style="width: 100%" data-th-text="${test.questions.get(0).question}">Question</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="answer : ${test.questions.get(0).answers}">
+                    <td class="message">
+
+                        <input type="checkbox" th:name="${test.questions.get(0).id}" th:if="${test.questions.get(0).checkbox}"/>
+                        <input type="radio" th:name="${test.questions.get(0).id}" th:if="${!test.questions.get(0).checkbox}"/>
+                    </td>
+                    <td class="message" data-th-text="${answer.answer}">
+                        Answer
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </tr>
+        <!--Все вопросы на странице, кнопки перехода отсутствуют-->
+        <tr data-th-each="question : ${questions}" th:if="${!test.singlepage}">
+
+            <table class="table table-hover" id="questions_list">
+                <thead>
+                <tr>
+                    <th style="width: auto"></th>
+                    <th style="width: 100%" data-th-text="${question.question}">Question</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="answer : ${question.answers}">
+                    <td class="message">
+
+                        <input type="checkbox" th:name="${question.id}" th:if="${question.checkbox}"/>
+                        <input type="radio" th:name="${question.id}" th:if="${!question.checkbox}"/>
+                    </td>
+                    <td class="message" data-th-text="${answer.answer}">
+                        Answer
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!--<div class="item">-->
+    <!--<nav>-->
+    <!--<ul class="pager">-->
+    <!--<li class="previous"><a href="#">&larr; Предыдущий вопрос</a></li>-->
+
+    <!--<li class="next disabled"><a href="#">Следующий вопрос &rarr;</a></li>-->
+    <!--</ul>-->
+    <!--</nav>-->
+    <!--</div>-->
+</div>
+</html>

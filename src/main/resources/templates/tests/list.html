@@ -1,0 +1,39 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content">
+
+    <a class="btn btn-primary" href="/tests/new-test">Add new test</a>
+
+    <table class="table table-striped" id="tests_list">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="test : ${tests}">
+            <td class="message" data-th-text="${test.name}">Name</td>
+            <td class="message" data-th-text="${test.description}">Description</td>
+            <td>
+                <a th:href="@{'/tests/{id}/start'(id=${test.id})}" class="start" th:attr="name=${test.name}">
+                        <span class="fa-stack">
+                            <i class="glyphicon glyphicon-hand-right"></i>
+                        </span>
+                </a>
+            </td>
+
+            <!--<td>-->
+                <!--<a th:href="@{'/tests/{id}/edit'(id=${post.id})}" class="edit" th:attr="name=${post.message}">-->
+                    <!--<span class="fa-stack">-->
+                        <!--<i class="glyphicon glyphicon-edit"></i>-->
+                    <!--</span>-->
+
+                <!--</a>-->
+            <!--</td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>
