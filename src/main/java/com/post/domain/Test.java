@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
-@EqualsAndHashCode
+
 @Entity
 public class Test {
 
@@ -30,5 +30,22 @@ public class Test {
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     private List<Question> questions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Test test = (Test) o;
+
+        if (id != test.id) return false;
+        return !(name != null ? !name.equals(test.name) : test.name != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
 }

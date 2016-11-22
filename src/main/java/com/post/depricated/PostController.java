@@ -1,4 +1,4 @@
-package com.post.controllers;
+package com.post.depricated;
 
 //@Controller
 //@RequestMapping("/tests")

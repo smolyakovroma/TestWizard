@@ -39,9 +39,9 @@ public class Application implements CommandLineRunner {
             for (int j = 0; j < 5; j++) {
                 Question question;
                 if (j % 2 == 0) {
-                    question = new Question("Question #" + (j + 1), test, true);
+                    question = new Question("Question #" + (j + 1), test, true, j);
                 } else {
-                    question = new Question("Question #" + (j + 1), test, false);
+                    question = new Question("Question #" + (j + 1), test, false, j);
                 }
 
                 questions.add(question);

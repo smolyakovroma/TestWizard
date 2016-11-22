@@ -1,27 +1,83 @@
-<html layout:decorator="layout">
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content">
-    <form method="post" name="test_form" id="test_form" action="/tests/add-test" role="form" th:if="${test==null}">
-        <div class="form-group">
-            <label for="test_name">Описание теста</label>
-            <input class="form-control" name="test_name" id="test_name" type="text" placeholder="введите наименование теста для отображение в заголовках"/>
+    <!--<form method="post" name="test_form" id="test_form" action="/tests/add-test" role="form" >-->
+    <!--<div class="form-group">-->
+    <!--<label for="test_name">Описание теста</label>-->
+    <!--<input class="form-control" name="test_name" id="test_name" type="text" placeholder="введите наименование теста для отображение в заголовках"/>-->
+    <!--<br/>-->
+    <!--<label for="test_description">Описание теста</label>-->
+    <!--<textarea rows="5" class="form-control" id="test_description" name="test_description" placeholder="кратко опишите о чем ваш тест"/>-->
+    <!--<br/>-->
+    <!--<label><input type="checkbox" id="singlepage" name="singlepage" checked="checked"/>&nbsp;Размещать вопросы теста на одной странице</label>-->
+    <!--</div>-->
+    <!--<button type="submit" id="add_test" class="btn btn-primary pull-right">Добавить вопрос</button>-->
+    <!--</form>-->
+
+    <div class="container">
+        <div class="row">
+            <a href="/tests/save-test" id="save_test" class="btn btn-info pull-right">Сохранить тест</a><br/>
+            <label for="test_name">Наименование теста</label>
+            <input class="form-control" name="test_name" id="test_name" type="text"
+                   placeholder="введите наименование теста для отображение в заголовках"/>
             <br/>
             <label for="test_description">Описание теста</label>
-            <textarea rows="5" class="form-control" id="test_description" name="test_description" placeholder="кратко опишите о чем ваш тест"/>
+            <textarea rows="2" class="form-control" id="test_description" name="test_description"
+                      placeholder="кратко опишите о чем ваш тест"/>
             <br/>
-            <label><input type="checkbox" id="singlepage" name="singlepage" checked="checked"/>&nbsp;Размещать вопросы теста на одной странице</label>
+            <label><input type="checkbox" id="singlepage" name="singlepage" checked="checked"/>&nbsp;Размещать вопросы
+                теста на одной странице</label>
         </div>
-        <button type="submit" id="add_test" class="btn btn-primary pull-right">Добавить вопрос</button>
-    </form>
+        <br/>
+        <!--<form method="post" name="question_form" id="question_form" action="/tests/add-question" role="form" >-->
+        <div class="row">
+            <!--<input type="hidden" name="id" th:value="${test.id}"/>-->
+            <table class="table table-striped" id="question_list">
+                <tbody>
+                <tr th:each="question:${newTest.questions}">
+                    <td>
+                        <label for="q">Вопрос</label>
+                        <textarea rows="2" class="form-control" id="q" name="question" th:text="${question.question}"
+                                  placeholder="введите вопрос к тесту"/>
+                        <br/>
+                        <a href="/tests/add-answer/0" th:href="@{'/tests/add-answer/{index}'(index=${question.index})}" class="btn btn-success pull-right">Добавить ответ</a>
+                        <br/> <br/>
+                        <!--Ответы на в-->
+                        <table class="table table-hover" id="questions_list" th:unless="${#lists.isEmpty(question.answers)}">
 
-    <form method="post" name="question_form" id="question_form" action="/tests/add-question" role="form" th:if="${test!=null}">
-        <div class="form-group">
-            <input type="hidden" name="id" th:value="${test.id}"/>
-            <p th:text="${test.name}">Name test</p>
-            <label for="question">Вопрос</label>
-            <textarea rows="5" class="form-control" id="question" name="question" placeholder="введите вопрос к тесту"/>
-            <br/>
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th style="width: auto"></th>-->
+                                <!--<th style="width: 100%" data-th-text="${question.question}">Question</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <tbody>
+                            <tr th:each="answer:${question.answers}">
+                                <td class="message" style="width: auto">
+
+                                    <input type="checkbox" th:name="${question.id}" th:if="${question.checkbox}"/>
+                                    <input type="radio" th:name="${question.id}" th:if="${!question.checkbox}"/>
+                                </td>
+                                <td class="message" style="width: 100%" >
+                                    <textarea rows="1" class="form-control" name="answer" th:text="${answer.answer}"
+                                              placeholder="введите ответ к вопросу"/>
+                                </td>
+                                <td> <a href="/tests/delete-answer/0"  th:href="@{'/tests/delete-answer/{index}'(index=${question.index})}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
-        <button type="submit" id="add_question" class="btn btn-primary pull-right">Добавить следующий вопрос</button>
-    </form>
+        <br/>
+        <a href="/tests/add-question" id="add_question" class="btn btn-info pull-right">Добавить вопрос</a>
+        <!--</form>-->
+
+
+    </div>
+
 </div>
 </html>

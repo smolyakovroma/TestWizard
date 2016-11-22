@@ -1,5 +1,40 @@
-<html layout:decorator="layout">
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content">
+
+    <form action="#" th:action="@{/tests/new}" th:object="${test}" method="post">
+        <div>
+            <!--<label th:text="#{seedstarter.rows}">Rows</label>-->
+            <table>
+                <thead>
+                <tr>
+                    <th>Row</th>
+                    <!--<th>Variety</th>-->
+                    <th>Question</th>
+                    <th>
+                        <button type="submit" name="addRow">Add row</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="question : *{questions}" >
+                    <td th:text="${question.id}">1</td>
+                    <!--<td>-->
+                    <!--<select th:field="*{rows[__${rowStat.index}__].variety}">-->
+                    <!--<option th:each="var : ${allVarieties}" th:value="${var.id}" th:text="${var.name}">Thymus Thymi</option>-->
+                    <!--</select>-->
+                    <!--</td>-->
+                    <td>
+                        <input type="text" name="question"/>
+                    </td>
+                    <td>
+                        <button type="submit" name="removeRow" th:value="${question.id}">Remove row</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+
     <form method="post" name="comment_form" id="comment_form" action="/posts/create" role="form">
         <div class="form-group">
             <label for="message">Post</label>

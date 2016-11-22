@@ -1,18 +1,15 @@
 package com.post.controllers;
 
-import com.post.domain.Question;
 import com.post.domain.Test;
 import com.post.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/tests")
+@SessionAttributes("newTest")
 public class TestController {
 
     @Autowired
@@ -33,31 +30,46 @@ public class TestController {
         return "tests/start";
     }
 
-    @RequestMapping(value = "/new-test", method = RequestMethod.GET)
-    public String newTest() {
-        return "tests/new-test";
-    }
+//    @RequestMapping(value = "/new-test", method = RequestMethod.GET)
+//    public ModelAndView newTest(@ModelAttribute("newTest") Test test) {
+//
+////        return new ModelAndView("tests/new-test", "newTest", new Test("tess","222"));
+//        test.setName("222");
+//        return new ModelAndView("tests/new-test", "newTest", test);
+//
+//    }
 
-    @RequestMapping(value = "/add-test", method = RequestMethod.POST)
-    public String addTest(@RequestParam("test_name") String name, @RequestParam("test_description") String description
-            ,@RequestParam("singlepage") boolean singlepage, Model model) {
-        Test test = new Test(name, description);
-        test.setSinglepage(singlepage);
-        model.addAttribute("test", test);
+//    @ModelAttribute("newTest")
+//    public  Test make(){
+//        Test sss = new Test("sss", "222");
+//        return sss;
+//    }
 
-        testService.saveTest(test);
-
-        return "tests/new-test";
-    }
-
-    @RequestMapping(value = "/add-question", method = RequestMethod.POST)
-    public String addQuestion(@RequestParam("question") String question, @RequestParam("id") String id, Model model) {
-        Test test = testService.findOne(Long.valueOf(id));
-        test.getQuestions().add(new Question(question, test, true));
-        model.addAttribute("test", test);
-        testService.saveTest(test);
+//    @RequestMapping(value = "/add-test", method = RequestMethod.POST)
+//    public String addTest(@RequestParam("test_name") String name, @RequestParam("test_description") String description
+//            ,@RequestParam("singlepage") boolean singlepage, Model model) {
+//        Test test = new Test(name, description);
+//        test.setSinglepage(singlepage);
+//        model.addAttribute("test", test);
 //        testService.saveTest(test);
+//
+//        return "tests/new-test";
+//    }
+//
+//    @RequestMapping(value = "/add-question", method = RequestMethod.POST)
+//    public String addQuestion(@RequestParam("question") String question, @RequestParam("id") String id, Model model) {
+//        Test test = testService.findOne(Long.valueOf(id));
+//
+//        Question questionAdd = new Question(question, test, true);
+//        questionAdd.setAnswers(Arrays.asList(new Answer()));
+//        test.getQuestions().add(questionAdd);
+//
+//        model.addAttribute("test", test);
+//        model.addAttribute("question", questionAdd);
+//        testService.saveTest(test);
+////        testService.saveTest(test);
+//
+//        return "tests/new-test";
+//    }
 
-        return "tests/new-test";
-    }
 }
