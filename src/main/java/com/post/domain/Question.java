@@ -7,7 +7,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
 @Entity
 public class Question {
     @Id

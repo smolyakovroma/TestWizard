@@ -13,7 +13,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 @Controller
 @RequestMapping("/tests")
@@ -67,20 +66,29 @@ public class AddTestController {
     }
 
 
-    @RequestMapping(value = "/delete-answer/{index}", method = RequestMethod.GET)
-    public String deleteAnswer(@PathVariable int index, @ModelAttribute("newTest") Test test, Model model) {
+    @RequestMapping(value = "/delete-answer/{index}/{index2}", method = RequestMethod.GET)
+    public String deleteAnswer(@PathVariable int index, @PathVariable int index2, @ModelAttribute("newTest") Test test, Model model) {
 
-        for (Question question : test.getQuestions()) {
-            if (question.getIndex() == index) {
-                Iterator<Answer> iterator = question.getAnswers().iterator();
-                while (iterator.hasNext()) {
-                    iterator.next();
-                    if (!iterator.hasNext()) {
-                        iterator.remove();
-                    }
-                }
-            }
-        }
+//        for (Question question : test.getQuestions()) {
+//            if (question.getIndex() == index) {
+//                Iterator<Answer> iterator = question.getAnswers().iterator();
+//                while (iterator.hasNext()) {
+//                    iterator.next();
+//                    if (!iterator.hasNext()) {
+//                        iterator.remove();
+//                    }
+//                }
+//            }
+//        }
+        Question question = test.getQuestions().get(index);
+        question.getAnswers().remove(index2);
+//        Iterator<Answer> iterator = question.getAnswers().iterator();
+//        while (iterator.hasNext()) {
+//                    iterator.next();
+//                    if (!iterator.hasNext()) {
+//                        iterator.remove();
+//                    }
+//                }
 
 //        model.addAttribute("newTest", test);
 
@@ -98,6 +106,16 @@ public class AddTestController {
 
         testService.saveTest(test);
         ss.setComplete();
+
+        return "tests/";
+    }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST, params = {"save"})
+    public String save(Test test, SessionStatus ss, Model model) {
+
+        testService.saveTest(test);
+//        ss.setComplete();
 
         return "tests/";
     }
